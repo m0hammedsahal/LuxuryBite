@@ -1,0 +1,280 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Home | Gourmet Food Store{% endblock %}
+
+{% block content %}
+{% load static %}
+
+<style>
+    /* General Body Styles */
+body {
+    background-color: #e0e5ec;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 0;
+    margin: 0;
+}
+
+/* Hero Section */
+.hero-section {
+    background: #f7f7f7;
+    border-radius: 20px;
+    padding: 50px 0;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1), -8px -8px 15px rgba(255, 255, 255, 0.7);
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.hero-section .btn {
+    background-color: #3b6f91;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
+    transition: 0.3s ease;
+}
+
+.hero-section .btn:hover {
+    background-color: #2e5f7e;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2), -8px -8px 15px rgba(255, 255, 255, 0.5);
+}
+
+/* Product Section */
+#products {
+    background-color: #f0f0f3;
+    padding: 40px 0;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1), -8px -8px 15px rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+}
+
+.product-card {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1), -5px -5px 15px rgba(255, 255, 255, 0.5);
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.product-card:hover {
+    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.15), -10px -10px 25px rgba(255, 255, 255, 0.5);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product-card h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 15px;
+}
+
+.product-card p {
+    color: #777;
+    margin-top: 10px;
+}
+
+.product-card .price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #3b6f91;
+    margin-top: 15px;
+}
+
+.product-card .btn {
+    background-color: #3b6f91;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin-top: 20px;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
+    transition: 0.3s ease;
+}
+
+.product-card .btn:hover {
+    background-color: #2e5f7e;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2), -8px -8px 15px rgba(255, 255, 255, 0.5);
+}
+
+/* Categories Section */
+#categories {
+    background-color: #f7f7f7;
+    padding: 40px 0;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1), -8px -8px 15px rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+}
+
+.category-card {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1), -5px -5px 15px rgba(255, 255, 255, 0.5);
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.category-card:hover {
+    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.15), -10px -10px 25px rgba(255, 255, 255, 0.5);
+}
+
+.category-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.category-card h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.category-card a {
+    color: #3b6f91;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.category-card a:hover {
+    color: #2e5f7e;
+}
+
+/* Contact Section */
+#contact {
+    background-color: #f0f0f3;
+    padding: 50px 0;
+    text-align: center;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1), -8px -8px 15px rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+}
+
+#contact h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#contact p {
+    font-size: 1.25rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+#contact .btn {
+    background-color: #3b6f91;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
+    transition: 0.3s ease;
+}
+
+#contact .btn:hover {
+    background-color: #2e5f7e;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2), -8px -8px 15px rgba(255, 255, 255, 0.5);
+}
+
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container mx-auto">
+        <h1>Welcome to Gourmet Food Store</h1>
+        <p>Discover premium gourmet products for every occasion. Delivered fresh to your doorstep!</p>
+        <a href="#products" class="btn">Shop Now</a>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+<section id="products">
+    <div class="container mx-auto">
+        <h2>Featured Products</h2>
+        <p>Our handpicked selection of premium gourmet items.</p>
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Product Cards -->
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300" alt="Product 1">
+                <h3>Gourmet Coffee Beans</h3>
+                <p>Premium quality beans for your perfect cup of coffee.</p>
+                <p class="price">$25.99</p>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300" alt="Product 2">
+                <h3>Organic Tea Leaves</h3>
+                <p>Refreshing organic tea, handpicked from the finest gardens.</p>
+                <p class="price">$19.99</p>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="product-card">
+                <img src="https://via.placeholder.com/300" alt="Product 3">
+                <h3>Gourmet Chocolates</h3>
+                <p>Handcrafted chocolates made from the finest cocoa.</p>
+                <p class="price">$35.99</p>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section id="categories">
+    <div class="container mx-auto">
+        <h2>Explore Our Categories</h2>
+        <p>Browse through our curated categories of gourmet products.</p>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
+            <div class="category-card">
+                <img src="https://via.placeholder.com/100" alt="Coffee">
+                <h3>Coffee</h3>
+                <a href="#">Explore Coffee</a>
+            </div>
+            <div class="category-card">
+                <img src="https://via.placeholder.com/100" alt="Tea">
+                <h3>Tea</h3>
+                <a href="#">Explore Tea</a>
+            </div>
+            <div class="category-card">
+                <img src="https://via.placeholder.com/100" alt="Chocolates">
+                <h3>Chocolates</h3>
+                <a href="#">Explore Chocolates</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+    <div class="container mx-auto">
+        <h2>Get in Touch</h2>
+        <p>If you have any questions, feel free to reach out to us!</p>
+        <a href="mailto:info@gourmetstore.com" class="btn">Contact Us</a>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+{% block title %}Employee Form{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6">
+    <h2 class="text-2xl font-bold text-center text-blue-600 mb-4">
+        {% if employee %}Edit{% else %}Create{% endif %} Employee
+    </h2>
+    <form method="post" action="{% if employee %}/employee/edit/{{ employee.id }}/{% else %}/employee/create/{% endif %}">
+        {% csrf_token %}
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                        <div class="bg-red-100 text-red-800 p-2 rounded mb-4">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% for field in form %}
+        <div class="mb-4">
+            <label for="{{ field.id_for_label }}" class="block text-gray-700 font-medium">{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+                
+
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+            {% if employee %}Update{% else %}Create{% endif %}
+        </button>
+    </form>
+</div>
+{% endblock %}

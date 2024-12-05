@@ -1,0 +1,193 @@
+/* General Body Styles */
+body {
+    background-color: #e0e5ec;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 0;
+    margin: 0;
+}
+
+/* Hero Section */
+.hero-section {
+    background: #f7f7f7;
+    border-radius: 20px;
+    padding: 50px 0;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1), -8px -8px 15px rgba(255, 255, 255, 0.7);
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.hero-section .btn {
+    background-color: #3b6f91;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
+    transition: 0.3s ease;
+}
+
+.hero-section .btn:hover {
+    background-color: #2e5f7e;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2), -8px -8px 15px rgba(255, 255, 255, 0.5);
+}
+
+/* Product Section */
+#products {
+    background-color: #f0f0f3;
+    padding: 40px 0;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1), -8px -8px 15px rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+}
+
+.product-card {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1), -5px -5px 15px rgba(255, 255, 255, 0.5);
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.product-card:hover {
+    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.15), -10px -10px 25px rgba(255, 255, 255, 0.5);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product-card h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 15px;
+}
+
+.product-card p {
+    color: #777;
+    margin-top: 10px;
+}
+
+.product-card .price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #3b6f91;
+    margin-top: 15px;
+}
+
+.product-card .btn {
+    background-color: #3b6f91;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin-top: 20px;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
+    transition: 0.3s ease;
+}
+
+.product-card .btn:hover {
+    background-color: #2e5f7e;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2), -8px -8px 15px rgba(255, 255, 255, 0.5);
+}
+
+/* Categories Section */
+#categories {
+    background-color: #f7f7f7;
+    padding: 40px 0;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1), -8px -8px 15px rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+}
+
+.category-card {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1), -5px -5px 15px rgba(255, 255, 255, 0.5);
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.category-card:hover {
+    box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.15), -10px -10px 25px rgba(255, 255, 255, 0.5);
+}
+
+.category-card img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.category-card h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.category-card a {
+    color: #3b6f91;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s ease;
+}
+
+.category-card a:hover {
+    color: #2e5f7e;
+}
+
+/* Contact Section */
+#contact {
+    background-color: #f0f0f3;
+    padding: 50px 0;
+    text-align: center;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1), -8px -8px 15px rgba(255, 255, 255, 0.7);
+    border-radius: 20px;
+}
+
+#contact h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#contact p {
+    font-size: 1.25rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+#contact .btn {
+    background-color: #3b6f91;
+    color: white;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1), -4px -4px 10px rgba(255, 255, 255, 0.7);
+    transition: 0.3s ease;
+}
+
+#contact .btn:hover {
+    background-color: #2e5f7e;
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.2), -8px -8px 15px rgba(255, 255, 255, 0.5);
+}
