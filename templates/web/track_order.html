@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-12">
+        <div class="bg-white shadow-lg rounded-lg p-6 md:p-12 max-w-4xl mx-auto">
+            <h1 class="text-3xl font-bold text-center text-blue-500">📦 Track Your Order</h1>
+            <p class="text-center text-gray-600 mt-2">Order ID: <strong>#{{ order.id }}</strong></p>
+
+            <!-- Order Date and Customer Details Section -->
+            <div class="mt-6">
+                <h3 class="text-xl font-semibold text-gray-800">Order Details</h3>
+                <div class="mt-2 text-gray-700">
+                    <p><strong>Order Date:</strong> {{ order.created_at|date:"F j, Y" }}</p>
+                    <p><strong>Customer Name:</strong> {{ order.full_name }}</p>
+                    <p><strong>Email:</strong> {{ order.customer.user.email }}</p>
+                    <p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+                </div>
+            </div>
+
+            <!-- Order Status Section -->
+            <div class="flex items-center mt-4">
+                <div class="w-full flex justify-between items-center">
+                    {% for status, label in status_choices %}
+                    <div class="flex flex-col items-center">
+                        <!-- Highlight the current and past statuses -->
+                        <div class="{% if forloop.counter0 <= current_status_index %}bg-blue-500{% else %}bg-gray-300{% endif %} h-8 w-8 rounded-full flex items-center justify-center text-white font-bold">
+                            {{ forloop.counter }}
+                        </div>
+                        <p class="text-sm mt-2 text-center text-gray-700">{{ label }}</p>
+                    </div>
+                    {% if not forloop.last %}
+                    <!-- Status Line -->
+                    <div class="{% if forloop.counter0 < current_status_index %}bg-blue-500{% else %}bg-gray-300{% endif %} w-12 h-1"></div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Order Items Section -->
+            <div class="mt-8">
+                <h2 class="text-2xl font-bold text-gray-800">Items in Your Order</h2>
+                <div class="overflow-x-auto mt-4">
+                    <table class="w-full table-auto border-collapse">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="px-4 py-2 border text-left">Product</th>
+                                <th class="px-4 py-2 border text-right">Quantity</th>
+                                <th class="px-4 py-2 border text-right">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order_items %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-2 border">{{ item.product.name }}</td>
+                                <td class="px-4 py-2 border text-right">{{ item.quantity }}</td>
+                                <td class="px-4 py-2 border text-right">₹{{ item.price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 text-right">
+                    <p class="text-xl font-bold">Total: ₹{{ order.total }}</p>
+                </div>
+            </div>
+
+            <!-- Delivery Address Section -->
+            <div class="mt-8">
+                <h2 class="text-2xl font-bold text-gray-800">Delivery Address</h2>
+                <p class="mt-2 text-gray-700">{{ order.address }}</p>
+            </div>
+
+            <!-- Cancel Order Button (If the order is not delivered/cancelled yet) -->
+            {% if order.status != 'Delivered' and order.status != 'Cancelled' %}
+            <div class="flex justify-center mt-8">
+                <form action="{% url 'manager:cancel_order' id=order.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" 
+                            class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded shadow">
+                        Cancel Order
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+
+            <!-- Back to Home Button -->
+            <div class="flex justify-center mt-8">
+                <a href="{% url 'web:index' %}" 
+                   class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow">
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

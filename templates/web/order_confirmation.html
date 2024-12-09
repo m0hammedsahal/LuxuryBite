@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-12">
+        <div class="bg-white shadow-lg rounded-lg p-6 md:p-12 max-w-3xl mx-auto animate-fadeIn">
+            <!-- Header Section -->
+            <div class="text-center">
+                <h1 class="text-4xl font-bold text-green-600 mb-6">🎉 Order Confirmed!</h1>
+                <p class="text-gray-700 text-lg">
+                    Thank you for your purchase, <strong class="font-semibold">{{ order.customer.user.first_name }}</strong>!
+                </p>
+                <p class="text-gray-500 text-sm mt-2">
+                    Your order ID is <strong class="text-gray-800">#{{ order.id }}</strong>.
+                </p>
+                <p class="mt-4 text-gray-700">
+                    A confirmation email has been sent to your registered email address.
+                </p>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="mt-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 pb-2">Order Summary</h2>
+                <div class="bg-gray-100 rounded-lg p-4">
+                    <p class="mb-2"><strong>Delivery Address:</strong> {{ order.address }}</p>
+                    <p class="mb-2"><strong>Payment Method:</strong> {{ formatted_payment_method }}</p>
+
+                    <p class="mb-2"><strong>Order Status:</strong> 
+                        <span class="text-blue-600 font-medium">{{ order.status }}</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Ordered Items -->
+            <div class="mt-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 pb-2">Items in Your Order</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto border-collapse">
+                        <thead>
+                            <tr class="bg-gray-200">
+                                <th class="px-4 py-2 border text-left">Product</th>
+                                <th class="px-4 py-2 border text-right">Quantity</th>
+                                <th class="px-4 py-2 border text-right">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in oitem %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-4 py-3 border text-gray-700">{{ item.product.name }}</td>
+                                <td class="px-4 py-3 border text-right text-gray-700">{{ item.quantity }}</td>
+                                <td class="px-4 py-3 border text-right text-gray-700">₹{{ item.price }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3" class="px-4 py-3 text-center text-gray-500">No items found in this order.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 text-right">
+                    <p class="text-xl font-bold text-gray-800">Total: ₹{{ order.total }}</p>
+                </div>
+            </div>
+
+            <!-- Call to Action Buttons -->
+            <div class="flex justify-center mt-8 space-x-4">
+                <a href="{% url 'web:index' %}" 
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                    Continue Shopping
+                </a>
+                <a href="{% url 'web:track_order' order.id %}" 
+                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                    Track Your Order
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+    </style>
+</body>
+</html>

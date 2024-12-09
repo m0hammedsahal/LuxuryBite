@@ -27,6 +27,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'web',
+    'product',
+    'users',
+    'custemer',
 ]
 
 MIDDLEWARE = [
@@ -64,7 +67,7 @@ WSGI_APPLICATION = 'ecommfood.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE" : "django.db.backends.postgresql_psycopg2",
-        "NAME" : "luxurybite",
+        "NAME" : "luxuarybite4",
         "HOST" : "localhost",
         "USER" : "sahal",
         "PASSWORD" : "1234",
@@ -113,3 +116,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+AUTH_USER_MODEL = 'users.User'
+AUTH_PROFILE_MODULE = 'users.User'

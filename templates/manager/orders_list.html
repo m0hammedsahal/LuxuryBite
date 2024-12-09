@@ -1,0 +1,251 @@
+
+{% extends 'base/manager-base.html' %} 
+{% load static %} 
+{% block container %}
+
+
+<style>
+    @keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.animate-fade-in {
+    animation: fade-in 0.3s ease-in-out;
+}
+
+</style>
+<!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        
+    {% include 'include/manager-nav.html' %}
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                    </ol>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Orders Table</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered zero-configuration">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>customer</th>
+                                                <th>total</th>
+                                                <th>offer</th>
+                                                <th>delivery</th>
+                                                <th>address</th>
+                                                <th>order_item</th>
+                                                <th>payment_method</th>
+                                                <th>order_status</th>
+                                                <th>order status update</th>
+                                                <th>order cancell</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for instance in instances %}
+                                            <tr>
+                                                <td>{{ instance.id }}</td>
+                                                <td>{{ instance.customer }}</td>
+                                                <td>{{ instance.total }}</td>
+                                                <td>{{ instance.offer_amount }}</td>
+                                                <td>{{ instance.delivery_charge }}</td>
+                                                <td>{{ instance.address }}</td>
+            
+                                                <!-- Order Item Section -->
+                                                <td style="">
+                                                    <div class="" style="display: flex;">
+                                                        {% for instances_item in instances_items %}
+                                                        {% if instances_item.order == instance %}
+                                                        <div class="align-items-center bg-light p-2 rounded shadow-sm" style="max-width: 100px; min-width: 100px;">
+                                                            <!-- Product Image -->
+                                                            <img src="{{ instances_item.product.image.url }}" 
+                                                                 alt="{{ instances_item.product.name }}" 
+                                                                 class="img-fluid rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                    
+                                                            <div class="ms-3">
+                                                                <p class="mb-0 text-dark small">{{ instances_item.product.name }}</p>
+                                                                <div class="mb-0 text-muted small" style="display: flex; align-items: center;">
+                                                                    <!-- Rounded price and display -->
+                                                                    <p class="mb-0">{{ instances_item.product.price|floatformat:0 }} </p> X 
+                                                                    <p class="mb-0">{{ instances_item.quantity }}</p> = 
+                                                                    <p class="mb-0">{{ instances_item.price|floatformat:0 }}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                </td>
+            
+                                                <td>{{ instance.payment_method }}</td>
+
+                                                <td class="py-2 px-2 text-center font-semibold">
+                                                    <div class="inline-block px-3 py-1 rounded-lg shadow-md
+                                                        transition-all duration-300 ease-in-out
+                                                        animate-fade-in
+                                                        {% if instance.status == 'Pending' %}
+                                                        bg-blue-100 text-blue-600
+                                                        {% elif instance.status == 'Preparing' %}
+                                                        bg-purple-100 text-purple-600
+                                                        {% elif instance.status == 'Ready for Pickup/Delivery' %}
+                                                        bg-yellow-100 text-yellow-600
+                                                        {% elif instance.status == 'Dispatched' %}
+                                                        bg-gray-100 text-gray-600
+                                                        {% elif instance.status == 'Delivered' %}
+                                                        bg-green-100 text-green-600
+                                                        {% elif instance.status == 'Cancelled' %}
+                                                        bg-red-100 text-red-600
+                                                        {% endif %}">
+                                                        <!-- Icon and Status -->
+                                                        <span class="flex items-center gap-1">
+                                                            {% if instance.status == 'Pending' %}
+                                                            <i class="fas fa-hourglass-start"></i> Pending
+                                                            {% elif instance.status == 'Preparing' %}
+                                                            <i class="fas fa-utensils"></i> Preparing
+                                                            {% elif instance.status == 'Ready for Pickup/Delivery' %}
+                                                            <i class="fas fa-box-open"></i> Ready
+                                                            {% elif instance.status == 'Dispatched' %}
+                                                            <i class="fas fa-shipping-fast"></i> Dispatched
+                                                            {% elif instance.status == 'Delivered' %}
+                                                            <i class="fas fa-check-circle"></i> Delivered
+                                                            {% elif instance.status == 'Cancelled' %}
+                                                            <i class="fas fa-times-circle"></i> Cancelled
+                                                            {% endif %}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                
+                                                
+                                                
+                                                <td>
+                                                    <div class="flex flex-col gap-2">
+                                                        {% if instance.status == 'Pending' %}
+                                                        <a href="{% url 'manager:order_track' id=instance.id %}">
+                                                            <button type="button" 
+                                                                class="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-300 to-blue-500 text-white font-semibold rounded-lg shadow-md hover:from-blue-400 hover:to-blue-600 transition duration-300">
+                                                                <i class="fas fa-clock"></i> Update to Preparing
+                                                            </button>
+                                                        </a>
+                                                        {% elif instance.status == 'Preparing' %}
+                                                        <a href="{% url 'manager:order_track' id=instance.id %}">
+                                                            <button type="button" 
+                                                                class="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-300 to-purple-500 text-white font-semibold rounded-lg shadow-md hover:from-purple-400 hover:to-purple-600 transition duration-300">
+                                                                <i class="fas fa-cogs"></i> Update to Ready for Pickup/Delivery
+                                                            </button>
+                                                        </a>
+                                                        {% elif instance.status == 'Ready for Pickup/Delivery' %}
+                                                        <a href="{% url 'manager:order_track' id=instance.id %}">
+                                                            <button type="button" 
+                                                                class="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-300 to-yellow-500 text-gray-800 font-semibold rounded-lg shadow-md hover:from-yellow-400 hover:to-yellow-600 transition duration-300">
+                                                                <i class="fas fa-truck"></i> Update to Dispatched
+                                                            </button>
+                                                        </a>
+                                                        {% elif instance.status == 'Dispatched' %}
+                                                        <a href="{% url 'manager:order_track' id=instance.id %}">
+                                                            <button type="button" 
+                                                                class="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-gray-400 to-gray-600 text-white font-semibold rounded-lg shadow-md hover:from-gray-500 hover:to-gray-700 transition duration-300">
+                                                                <i class="fas fa-route"></i> Update to Delivered
+                                                            </button>
+                                                        </a>
+                                                        {% elif instance.status == 'Delivered' %}
+                                                        <span class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-200 to-green-400 text-white font-semibold rounded-lg shadow-md">
+                                                            <i class="fas fa-check-circle"></i> Delivered
+                                                        </span>
+                                                        {% else %}
+                                                        <span class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-500 to-red-700 text-white font-semibold rounded-lg shadow-md">
+                                                            <i class="fas fa-times-circle"></i> Cancelled
+                                                        </span>
+                                                        {% endif %}
+                                                    </div>
+                                                </td>
+                                                
+                                                
+                                                {% if instance.status != 'Cancelled' %}
+                                                <td><a href="{% url 'manager:cancel_order' id=instance.id %}"><button type="button" class="btn mb-1 btn-outline-danger">Cancel Order</button></a></td>
+                                                {% else %}
+                                                <td><button type="button" class="bg-red-500 text-white py-2 px-3 rounded-md border border-">Cancelled</button></td>
+
+                                                {% endif %}
+
+                                                <td><a href=""><button type="button" class="btn mb-1 btn-outline-primary">Edit</button></a></td>
+                                                <td><a href=""><button type="button" class="btn mb-1 btn-outline-danger">Delete</button></a></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+        
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    {% endblock %}

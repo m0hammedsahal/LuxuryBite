@@ -1,0 +1,62 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<section class="bg-gray-100 py-10">
+    <div class="container mx-auto">
+        <h1 class="text-3xl font-bold text-gray-700 mb-6">Your Cart</h1>
+
+        {% if cart_items %}
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="overflow-x-auto">
+                    <table class="table-auto w-full">
+                        <thead>
+                            <tr class="text-left bg-gray-200 text-gray-700">
+                                <th class="py-3 px-4">Product</th>
+                                <th class="py-3 px-4">Quantity</th>
+                                <th class="py-3 px-4">Price</th>
+                                <th class="py-3 px-4">Total</th>
+                                <th class="py-3 px-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart_items %}
+                                <tr class="border-t">
+                                    <td class="py-3 px-4">
+                                        <div class="flex items-center">
+                                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-16 h-16 rounded-md mr-4">
+                                            <span>{{ item.product.name }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <form method="POST" action="{% url 'web:update_cart_quantity' item.id %}" class="flex items-center">
+                                            {% csrf_token %}
+                                            <button type="submit" name="action" value="decrease" class="px-2 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md mr-2">-</button>
+                                            <span class="text-gray-800">{{ item.quantity }}</span>
+                                            <button type="submit" name="action" value="increase" class="px-2 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md ml-2">+</button>
+                                        </form>
+                                    </td>
+                                    <td class="py-3 px-4 text-gray-800">{{ item.product.price }}</td>
+                                    <td class="py-3 px-4 text-gray-800">{{ item.amount }}</td>
+                                    <td class="py-3 px-4">
+                                        <form method="POST" action="{% url 'web:remove_cart_item' item.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Remove</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-6 text-right">
+                    <h2 class="text-2xl font-bold">Total: ₹{{ total_price }}</h2>
+                    <a href="{% url 'web:checkout' %}" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg mt-4 inline-block">Checkout</a>
+                </div>
+            </div>
+        {% else %}
+            <p class="text-lg text-gray-600">Your cart is empty. <a href="" class="text-blue-500 underline">Continue Shopping</a>.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

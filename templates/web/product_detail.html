@@ -1,0 +1,131 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ product.name }} | Gourmet Food Store{% endblock %}
+
+{% block content %}
+<section id="product-detail" class="bg-gray-50 py-16">
+    <div class="container mx-auto px-4 lg:px-8">
+        <!-- Product Section -->
+        <div class="grid lg:grid-cols-2 gap-8 items-center">
+            <!-- Product Image -->
+            <div class="relative">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-[400px] rounded-lg shadow-lg object-cover">
+                {% if product.is_on_sale %}
+                <div class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full text-sm font-bold">Sale</div>
+                {% endif %}
+            </div>
+
+            <!-- Product Info -->
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ product.name }}</h1>
+                <p class="text-lg text-gray-500 mb-4">{{ product.description }}</p>
+
+                <!-- Ratings and Reviews -->
+                <div class="flex items-center mb-6">
+                    <div class="flex space-x-1 text-yellow-400">
+                        {% for _ in star_range %}
+                            <i class="fas fa-star"></i>
+                        {% endfor %}
+                    </div>
+                    <span class="text-gray-600 text-sm ml-2">({{ reviews.count }} Reviews)</span>
+                </div>
+
+                <!-- Price -->
+                <div class="mb-4">
+                    <span class="text-2xl font-bold text-blue-600">${{ product.discount_price|default:product.price }}</span>
+                    {% if product.discount_price %}
+                    <span class="text-sm line-through text-gray-400 ml-2">${{ product.price }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- Quantity Selector -->
+                <div class="flex space-x-4">
+                    {% if product_in_cart %}
+                    <form method="POST" action="{% url 'web:update_cart_quantity' id=cart_item.id %}">
+                        {% csrf_token %}
+                        <div class="flex items-center space-x-2">
+                            <!-- Decrease Button -->
+                            <button type="submit" name="action" value="decrease" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
+                                -
+                            </button>
+                            <!-- Quantity Display -->
+                            <input type="number" name="quantity" value="{{ cart_item.quantity }}" class="w-12 text-center border rounded" readonly>
+                            <!-- Increase Button -->
+                            <button type="submit" name="action" value="increase" class="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
+                                +
+                            </button>
+                        </div>
+                    </form>
+                    {% else %}
+                    <a href="{% url 'web:add_to_cart' id=product.id %}" class="bg-teal-600 hover:bg-teal-700 text-white py-2 px-4 rounded-lg text-sm transition-all transform hover:scale-105">
+                        Add to Cart
+                    </a>
+                    {% endif %}
+                
+                
+                    <!-- Wishlist Button -->
+                    <button type="button" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-lg text-sm font-semibold transition-all transform hover:scale-105 flex items-center space-x-2">
+                        <i class="fas fa-heart"></i>
+                        <span>Wishlist</span>
+                    </button>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Product Description Section -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold mb-4">Product Details</h2>
+            <p class="text-gray-600 leading-relaxed">{{ product.details }}</p>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold mb-4">Customer Reviews</h2>
+            <div class="space-y-6">
+                {% for review in reviews %}
+                <div class="bg-white p-4 rounded-lg shadow-md">
+                    <div class="flex items-center mb-2">
+                        <div class="flex space-x-1 text-yellow-400">
+                            {% for _ in star_range %}
+                                <i class="fas fa-star"></i>
+                            {% endfor %}
+                        </div>
+                        <span class="text-gray-600 text-sm ml-2">{{ review.user.username }} - {{ review.created_at|date:"M d, Y" }}</span>
+                    </div>
+                    <p class="text-gray-600">{{ review.comment }}</p>
+                </div>
+                {% empty %}
+                <p class="text-gray-500">No reviews yet. Be the first to review this product!</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Related Products Section -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold mb-4">Related Products</h2>
+            <div class="flex overflow-x-scroll space-x-6 scrollbar-hide">
+                {% for product in related_products %}
+                <div class="bg-white rounded-lg p-4 shadow-lg flex-shrink-0 w-48">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-32 object-cover rounded-md mb-2">
+                    <h3 class="text-lg font-semibold text-gray-800">{{ product.name }}</h3>
+                    <p class="text-blue-600 font-bold">${{ product.price }}</p>
+                    <a href="{% url 'product_detail' product.id %}" class="text-blue-600 hover:underline text-sm mt-2 block">View Product</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Add custom CSS for scrollbar -->
+<style>
+    .scrollbar-hide {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, and Opera */
+    }
+</style>
+{% endblock %}
