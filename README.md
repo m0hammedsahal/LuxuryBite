@@ -3,10 +3,6 @@
 
 
 
-A responsive Gourmet Food Products eCommerce platform developed using Tailwind CSS, Django, PostgreSQL, and JavaScript, providing a smooth shopping experience with product browsing, secure checkout, and order management.
-
-
-
 
 ## Features
 
