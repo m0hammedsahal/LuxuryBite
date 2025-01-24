@@ -14,7 +14,7 @@ A responsive Gourmet Food Products eCommerce platform developed using Tailwind C
 - Robust cart management for seamless shopping.  
 - Secure payment integration for worry-free transactions.  
 - Fully responsive design for all devices.
-- 
+- Badges
 
 [![Framework](https://img.shields.io/badge/Framework-Django-blue)](https://www.djangoproject.com/)  
 [![Frontend](https://img.shields.io/badge/Frontend-TailwindCSS-orange)](https://tailwindcss.com/)  
