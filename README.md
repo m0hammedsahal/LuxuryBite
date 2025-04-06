@@ -28,5 +28,5 @@ python manage.py runserver
 ```
 
 🤝 **Contributions Welcome!** 🍽️  
-❤️ Crafted with taste by Hhd Sahal
+❤️ Crafted with taste by Mhd Sahal
 
