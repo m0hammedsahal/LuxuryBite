@@ -13,7 +13,7 @@ An elegant e-commerce platform for **gourmet and luxury food products**. Built w
 ## 🏗️ Tech Stack
 
 🖥 **Backend:** Django, Django REST Framework  
-⚛️ **Frontend:** Tailwind CSS  
+⚛️ **Frontend:** Tailwind CSS, JavaScript  
 🗄 **Database:** PostgreSQL / MySQL  
 🔐 **Auth:** JWT Authentication  
 
